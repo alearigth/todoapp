@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import {TaskRow} from "./components/TaskRow";
 
 function App() {
+
+  const [userName, setUserName] = useState("Alejandroski");
+  const [taskItems, setTaskItems] = useState([
+    {name:"tagega uno", done: false},
+    {name:"tagega dos", done: false},
+    {name:"tagega tres", done: true},
+    {name:"tagega cuatro", done: false}
+  ]);
+
+  const toggleTask = task => 
+  setTaskItems(taskItems.map(t => (t.name === task.name ? {...t, done: !t.done}: t)))
+
+  const taskTableRows = () => taskItems.map(task => (
+    <TaskRow task={task} key={task.name} toggleTask={toggleTask}/>
+  ))
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello World</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>{taskTableRows()}</tbody>
+      </table>
     </div>
   );
 }
