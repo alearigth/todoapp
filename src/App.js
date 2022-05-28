@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import {TaskRow} from "./components/TaskRow";
+import {TaskBanner} from "./components/TaskBanner";
+import {TaskCreator} from "./components/TaskCreator";
 
 function App() {
 
@@ -11,6 +13,12 @@ function App() {
     {name:"tagega cuatro", done: false}
   ]);
 
+  const createNewTask = taskName => {
+    if(!taskItems.find(t => t.name === taskName)) {
+      setTaskItems([...taskItems, {name:taskName, done:false}])
+    }
+  }
+
   const toggleTask = task => 
   setTaskItems(taskItems.map(t => (t.name === task.name ? {...t, done: !t.done}: t)))
 
@@ -20,8 +28,9 @@ function App() {
 
   return (
     <div>
-      <h1>Hello World</h1>
-      <table>
+      <TaskBanner userName={userName} taskItems={taskItems}/>
+      <TaskCreator callback={createNewTask}/>
+      <table className="table table-striped table-border">
         <thead>
           <tr>
             <th>Description</th>
